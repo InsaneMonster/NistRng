@@ -40,4 +40,9 @@ the git repository. You are welcome to open issues or participate in the project
 For a simple use case, refer to benchmark provided in the repository. For advanced use, refer to the built-in documentation
 and to the provided source code in the repository.
 
+**Current issues**
+
+Currently the slow speed of both the Serial and Approximate Entropy tests is an open issue. Any solution or improvement is
+welcome.
+
 

@@ -4,7 +4,7 @@ name: str = "nistrng"
 version: str = "1.0.0"
 requirements: [] = ["numpy>=1.14.5", "scipy>=1.2.1"]
 packages: [] = find_packages()
-url: str = ""
+url: str = "https://github.com/InsaneMonster/NistRng"
 lic: str = "Creative Commons CC-BY 3.0"
 author: str = "Luca Pasqualini"
 author_email: str = "psqluca@gmail.com"
