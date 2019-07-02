@@ -31,7 +31,7 @@ if __name__ == "__main__":
     for name in eligible_battery.keys():
         print("-" + name)
     # Test the sequence on the eligible tests
-    results = run_all_battery(binary_sequence, eligible_battery)
+    results = run_all_battery(binary_sequence, eligible_battery, False)
     # Print results one by one
     print("Test results:")
     for result, elapsed_time in results:
