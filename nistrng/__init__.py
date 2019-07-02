@@ -4,11 +4,10 @@
 #
 # Inspired by the work of David Johnston (C) 2017: https://github.com/dj-on-github/sp800_22_tests
 #
-# NistRng is licensed under a
-# Creative Commons Attribution-ShareAlike 3.0 Unported License.
+# NistRng is licensed under a MIT License.
 #
 # You should have received a copy of the license along with this
-# work. If not, see <http://creativecommons.org/licenses/by-sa/3.0/>.
+# work. If not, see <https://opensource.org/licenses/MIT>.
 
 # Import scripts
 

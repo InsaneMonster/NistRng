@@ -24,7 +24,7 @@ This work is inspired by the great work of David Johnston (C) 2017, which can be
 
 **License**
 
-*Creative Commons Attribution-ShareAlike 3.0 Unported License*
+*MIT License*
 
 For additional information check the provided license file.
 
