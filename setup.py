@@ -4,10 +4,10 @@
 #
 # Inspired by the work of David Johnston (C) 2017: https://github.com/dj-on-github/sp800_22_tests
 #
-# NistRng is licensed under a MIT License.
+# NistRng is licensed under a BSD 3-Clause.
 #
 # You should have received a copy of the license along with this
-# work. If not, see <https://opensource.org/licenses/MIT>.
+# work. If not, see <https://opensource.org/licenses/BSD-3-Clause>.
 
 # Import setuptools
 
@@ -28,16 +28,16 @@ version: str = "1.0.0"
 requirements: [] = ["numpy>=1.14.5", "scipy>=1.2.1"]
 packages: [] = find_packages()
 url: str = "https://github.com/InsaneMonster/NistRng"
-lic: str = "Creative Commons CC-BY 3.0"
+lic: str = "BSD 3-Clause"
 author: str = "Luca Pasqualini"
-author_email: str = "psqluca@gmail.com"
+author_email: str = "pasqualini@diism.unisi.it"
 description: str = "NIST Test Suite for Random Number Generators - SAILab - University of Siena"
 long_description: str = readme(),
 keywords: str = "NIST Tests RNG Random Number Generator SAILab USiena Siena SP800-22r1a",
 include_package_data: bool = True,
 classifiers: [] = [
                     "Development Status :: 5 - Production/Stable",
-                    "License :: OSI Approved :: MIT License",
+                    "License :: OSI Approved :: BSD License",
                     "Programming Language :: Python :: 3.6",
                     "Topic :: Security :: Cryptography",
                   ],

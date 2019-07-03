@@ -4,10 +4,10 @@
 #
 # Inspired by the work of David Johnston (C) 2017: https://github.com/dj-on-github/sp800_22_tests
 #
-# NistRng is licensed under a MIT License.
+# NistRng is licensed under a BSD 3-Clause.
 #
 # You should have received a copy of the license along with this
-# work. If not, see <https://opensource.org/licenses/MIT>.
+# work. If not, see <https://opensource.org/licenses/BSD-3-Clause>.
 
 # Import packages
 
