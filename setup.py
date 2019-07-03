@@ -32,15 +32,15 @@ lic: str = "BSD 3-Clause"
 author: str = "Luca Pasqualini"
 author_email: str = "pasqualini@diism.unisi.it"
 description: str = "NIST Test Suite for Random Number Generators - SAILab - University of Siena"
-long_description: str = readme(),
-keywords: str = "NIST Tests RNG Random Number Generator SAILab USiena Siena SP800-22r1a",
-include_package_data: bool = True,
+long_description: str = readme()
+keywords: str = "NIST Tests RNG Random Number Generator SAILab USiena Siena SP800-22r1a"
+include_package_data: bool = True
 classifiers: [] = [
                     "Development Status :: 5 - Production/Stable",
                     "License :: OSI Approved :: BSD License",
                     "Programming Language :: Python :: 3.6",
                     "Topic :: Security :: Cryptography",
-                  ],
+                  ]
 
 # Run setup
 
