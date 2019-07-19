@@ -15,7 +15,7 @@ This work is inspired by the great work of David Johnston (C) 2017, which can be
 
 **Features**
 
-- All the test in the **NIST** paper vectorized and optimized the better I could
+- All the test in the **NIST** paper vectorized and optimized the best I could
 - Class structure for each test allowing for easy debug and use, both in script and inside broader applications
 - Utility functions to pack the sequence in 8-bits using numpy and to run the tests in multiple ways
 - Cache system both at function level and at test level to improve performance
@@ -30,19 +30,25 @@ For additional information check the provided license file.
 
 **How to install**
 
-If you only need to use the framework, just download the pip package *nistrng* and import the package in your scripts
+If you only need to use the framework, just download the pip package *nistrng* and import the package in your scripts:
+
+- pip install nistrng
 
 If you want to improve/modify/extends the framework, or even just try my own simple benchmarks at home, download or clone
-the git repository. You are welcome to open issues or participate in the project, especially if further optimization is achieved.
+the git `repository <https://github.com/InsaneMonster/NistRng>`_. You are welcome to open issues or participate in the project, especially if further optimization is achieved.
 
 **How to use**
 
-For a simple use case, refer to benchmark provided in the repository. For advanced use, refer to the built-in documentation
-and to the provided source code in the repository.
+For a simple use case, refer to benchmark provided in the `repository <https://github.com/InsaneMonster/NistRng>`_. For advanced use, refer to the built-in documentation
+and to the provided source code in the `repository <https://github.com/InsaneMonster/NistRng>`_.
 
 **Current issues**
 
 Currently the slow speed of both the Serial and Approximate Entropy tests is an open issue. Any solution or improvement is
 welcome.
 
+**Changelog**
+
+- improved definition of Test abstract class
+- added function to run a battery of test in-order, i.e. stop whenever a test fails
 

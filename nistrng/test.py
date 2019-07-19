@@ -75,8 +75,8 @@ class Test:
         :param bits: the sequence of bits on which to run the test, wrapped in a numpy array (ndarray)
         :return: a Result object stating the outcome of the test
         """
-        # Empty method, definition should be implemented on a child class basis
-        pass
+        # Abstract method, definition should be implemented on a child class basis
+        raise NotImplementedError()
 
     def run(self,
             bits: numpy.ndarray):
@@ -99,5 +99,5 @@ class Test:
         :param bits: the sequence of bits for which to check test eligibility, wrapped in a numpy array (ndarray)
         :return: a boolean flag stating the eligibility or not of the test
         """
-        # Empty method, definition should be implemented on a child class basis
-        pass
+        # Abstract method, definition should be implemented on a child class basis
+        raise NotImplementedError()

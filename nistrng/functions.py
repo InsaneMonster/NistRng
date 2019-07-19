@@ -15,7 +15,7 @@ import numpy
 
 # Import required src
 
-from nistrng import Test
+from nistrng import Test, Result
 
 from nistrng.sp800_22r1a import *
 
@@ -61,6 +61,29 @@ def run_all_battery(bits: numpy.ndarray, battery: dict,
     results: [] = []
     for name in battery.keys():
         results.append(run_by_name_battery(name, bits, battery, check_eligibility))
+    return results
+
+
+def run_in_order_battery(bits: numpy.ndarray, battery: dict,
+                         check_eligibility: bool = True) -> []:
+    """
+    Run all the given tests in the battery with the given bits as input and strictly following the dict order, i.e. not
+    trying the following test is the one before is not passed.
+    E.g. of a battery of test is the sp800-22r1a test battery.
+
+    :param bits: the sequence (ndarray) of bits encoding the sequence of integers
+    :param battery: the battery of test (dict with keys the names and values the classes extending Test) to run on the sequence
+    :param check_eligibility: whether to check or not for eligibility. If checked and failed, the associate test returns None
+    :return: a list of Result objects zipped each one with its own elapsed time or Nones for each not eligible test (if check is required)
+    """
+    # Run all the tests in the battery by name
+    results: [] = []
+    for name in battery.keys():
+        result: Result = run_by_name_battery(name, bits, battery, check_eligibility)
+        results.append(result)
+        # Stop when a test is not passed
+        if not result.passed:
+            break
     return results
 
 
