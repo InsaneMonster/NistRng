@@ -79,8 +79,8 @@ def run_in_order_battery(bits: numpy.ndarray, battery: dict,
     # Run all the tests in the battery by name
     results: [] = []
     for name in battery.keys():
-        result: Result = run_by_name_battery(name, bits, battery, check_eligibility)
-        results.append(result)
+        result, elapsed_time = run_by_name_battery(name, bits, battery, check_eligibility)
+        results.append((result, elapsed_time))
         # Stop when a test is not passed
         if not result.passed:
             break
