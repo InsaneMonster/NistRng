@@ -49,6 +49,5 @@ welcome.
 
 **Changelog**
 
-- improved definition of Test abstract class
-- added function to run a battery of test in-order, i.e. stop whenever a test fails
+- fixed function run in order which presented a small bug preventing it to run at all
 
