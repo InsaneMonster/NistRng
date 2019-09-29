@@ -24,7 +24,7 @@ def readme():
 # Set all package values
 
 name: str = "nistrng"
-version: str = "1.1.1"
+version: str = "1.2.0"
 requirements: [] = ["numpy>=1.14.5", "scipy>=1.2.1"]
 packages: [] = find_packages()
 url: str = "https://github.com/InsaneMonster/NistRng"
