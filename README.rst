@@ -49,5 +49,7 @@ welcome.
 
 **Changelog**
 
-- fixed function run in order which presented a small bug preventing it to run at all
+- improved safe-guard against eventual NaN values that may arise inside the score calculations
+- added unpack function to return to the original numeric integer value from a 8-bit binary sequence
+- some minor fixes and adjustments
 

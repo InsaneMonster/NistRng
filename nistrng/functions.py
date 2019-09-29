@@ -15,7 +15,7 @@ import numpy
 
 # Import required src
 
-from nistrng import Test, Result
+from nistrng import Test
 
 from nistrng.sp800_22r1a import *
 
@@ -162,10 +162,16 @@ def pack_sequence(sequence: numpy.ndarray) -> numpy.ndarray:
     Pack a sequence of signed integers to its binary 8-bit representation using numpy.
 
     :param sequence: the integer sequence to pack (in the form of a numpy array, ndarray)
-    :return: the sequence packed in 8-bit signed integer in the form of a numpy array (ndarray)
+    :return: the sequence packed in 8-bit integer in the form of a numpy array (ndarray)
     """
-    sequence_binary_encoded: numpy.ndarray = numpy.unpackbits(numpy.array(sequence, dtype=numpy.uint8)).astype(numpy.int8)
-    sequence_binary_encoded[sequence_binary_encoded < 0] = -128 - sequence_binary_encoded[sequence_binary_encoded < 0]
-    return sequence_binary_encoded
+    return numpy.unpackbits(numpy.array(sequence, dtype=numpy.uint8)).astype(numpy.int8)
 
 
+def unpack_sequence(sequence_binary_encoded: numpy.ndarray) -> numpy.ndarray:
+    """
+    Unpack a sequence of numbers represented with 8-bits to its signed integer representation using numpy.
+
+    :param sequence_binary_encoded: the 8-bit numbers sequence to unpack (in the form of a numpy array, ndarray)
+    :return: the sequence unpacked in signed integer in the form of a numpy array (ndarray)
+    """
+    return numpy.packbits(numpy.array(sequence_binary_encoded)).astype(numpy.int8)

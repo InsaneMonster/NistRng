@@ -44,7 +44,7 @@ class Result:
 
     @property
     def score(self) -> float:
-        return numpy.average(self._score_list)
+        return numpy.nanmean(self._score_list)
 
 
 # Define base abstract test class
