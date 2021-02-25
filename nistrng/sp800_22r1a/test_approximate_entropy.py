@@ -73,7 +73,7 @@ class ApproximateEntropyTest(Test):
             # Compute Phi-m based on C-i
             phi_m.append(numpy.sum(c_i[c_i > 0.0] * numpy.log((c_i[c_i > 0.0] / 10.0))))
         # Compute Chi-Square from the computed statistics
-        chi_square: float = 2 * bits.size * (math.log(2) - phi_m[0] - phi_m[1])
+        chi_square: float = 2 * bits.size * (math.log(2) - (phi_m[0] - phi_m[1]))
         # Compute the score (P-value)
         score: float = scipy.special.gammaincc(2 ** (blocks_length - 1), (chi_square / 2.0))
         # Return result
