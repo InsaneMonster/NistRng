@@ -77,7 +77,7 @@ class NonOverlappingTemplateMatchingTest(Test):
             count: int = 0
             # Count the matches in the block with the chosen template
             while position < (substring_bits_length - b_template.size):
-                if numpy.array_equal(block[position:position + b_template.size], b_template):
+                if (block[position:position + b_template.size] == b_template).all():
                     position += b_template.size
                     count += 1
                 else:
@@ -87,7 +87,7 @@ class NonOverlappingTemplateMatchingTest(Test):
         mu: float = float(substring_bits_length - b_template.size + 1) / float(2 ** b_template.size)
         sigma: float = substring_bits_length * ((1.0 / float(2 ** b_template.size)) - (float((2 * b_template.size) - 1) / float(2 ** (2 * b_template.size))))
         # Compute Chi-square
-        chi_square: float = numpy.sum(((matches[:] - mu) ** 2) / (sigma ** 2))
+        chi_square: float = float(numpy.sum(((matches[:] - mu) ** 2) / (sigma ** 2)))
         # If Chi-square is zero, fail the test
         if chi_square != 0:
             # Compute the score (P-value)
