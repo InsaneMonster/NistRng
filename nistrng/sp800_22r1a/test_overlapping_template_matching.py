@@ -56,17 +56,17 @@ class OverlappingTemplateMatchingTest(Test):
             count: int = 0
             # Count the matches in the block with respect to the given template
             for position in range(self._substring_bits_length - self._template_bits_length):
-                if block[position:position + self._template_bits_length] == b_template:
+                if (block[position:position + self._template_bits_length] == b_template).all():
                     count += 1
             matches_distributions[min(count, self._freedom_degrees)] += 1
         # Define eta and default probabilities (from STS) of size freedom degrees + 1
         eta: float = (self._substring_bits_length - self._template_bits_length + 1.0) / (2.0 ** self._template_bits_length) / 2.0
         probabilities: numpy.ndarray = numpy.array([0.364091, 0.185659, 0.139381, 0.100571, 0.0704323, 0.139865])
         # Compute probabilities up to degrees of freedom and change the last based on the sum of all of them
-        probabilities[:self._freedom_degrees] = self._get_probability(numpy.arange(self._freedom_degrees)[:], eta)
+        probabilities[:self._freedom_degrees] = self._get_probabilities(numpy.arange(self._freedom_degrees)[:], eta)
         probabilities[-1] = 1.0 - numpy.sum(probabilities)
         # Compute Chi-square
-        chi_square: float = numpy.sum(((matches_distributions[:] - (self._blocks_number * probabilities[:])) ** 2) / (self._blocks_number * probabilities[:]))
+        chi_square: float = float(numpy.sum(((matches_distributions[:] - (self._blocks_number * probabilities[:])) ** 2) / (self._blocks_number * probabilities[:])))
         # If Chi-square is zero, fail the test
         if chi_square != 0:
             # Compute the score (P-value)
@@ -88,27 +88,30 @@ class OverlappingTemplateMatchingTest(Test):
         return True
 
     @staticmethod
-    def _log_gamma(x: int):
+    def _log_gamma(x: []) -> []:
         """
-        Compute log-gamma function on the given input integer.
+        Compute log-gamma function on the given input list (of integers).
 
-        :param x: input integer of the log-gamma function
-        :return: the log-gamma function computed using scipy
+        :param x: input integer list of the log-gamma function
+        :return: the log-gamma function computed using scipy and numpy
         """
-        return math.log(scipy.special.gamma(x))
+        return numpy.log(scipy.special.gamma(x))
 
     @staticmethod
-    def _get_probability(freedom_degree_value: int, eta_value: float):
+    def _get_probabilities(freedom_degree_values: [], eta_value: float) -> []:
         """
-        Compute probability at the given freedom value with the given eta value.
+        Compute probabilities at the given freedom values with the given eta value.
 
-        :param freedom_degree_value: the freedom degree value for which to compute probability
+        :param freedom_degree_values: the freedom degree values for which to compute probability
         :param eta_value: the eta value for which to compute probability
-        :return: the probability
+        :return: the probabilities list
         """
-        if freedom_degree_value == 0:
-            probability: float = numpy.exp(-eta_value)
-        else:
-            indexes: numpy.ndarray = numpy.arange(1, freedom_degree_value + 1)
-            probability: float = numpy.sum(numpy.exp(-eta_value - freedom_degree_value * numpy.log(2) + indexes[:] * numpy.log(eta_value) - OverlappingTemplateMatchingTest._log_gamma(indexes[:] + 1) + OverlappingTemplateMatchingTest._log_gamma(freedom_degree_value) - OverlappingTemplateMatchingTest._log_gamma(indexes[:]) - OverlappingTemplateMatchingTest._log_gamma(freedom_degree_value - indexes[:] + 1)))
-        return probability
+        probabilities: [] = []
+        for freedom_degree_value in freedom_degree_values:
+            if freedom_degree_value == 0:
+                probability: float = numpy.exp(-eta_value)
+            else:
+                indexes: numpy.ndarray = numpy.arange(1, freedom_degree_value + 1)
+                probability: float = float(numpy.sum(numpy.exp(-eta_value - freedom_degree_value * numpy.log(2) + indexes[:] * numpy.log(eta_value) - OverlappingTemplateMatchingTest._log_gamma(indexes[:] + 1) + OverlappingTemplateMatchingTest._log_gamma(freedom_degree_value) - OverlappingTemplateMatchingTest._log_gamma(indexes[:]) - OverlappingTemplateMatchingTest._log_gamma(freedom_degree_value - indexes[:] + 1))))
+            probabilities.append(probability)
+        return probabilities

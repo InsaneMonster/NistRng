@@ -34,6 +34,7 @@ SP800_22R1A_BATTERY: dict = {
                                 "linear_complexity": LinearComplexityTest(),
                                 "serial": SerialTest(),
                                 "approximate_entropy": ApproximateEntropyTest(),
+                                "cumulative sums": CumulativeSumsTest(),
                                 "random_excursion": RandomExcursionTest(),
                                 "random_excursion_variant": RandomExcursionVariantTest()
                             }
@@ -101,7 +102,7 @@ def run_by_name_battery(test_name: str,
     :return: a Result object and the relative elapsed time if eligible, None otherwise (if check is required)
     """
     # Generate the test or fetch it from cache if possible
-    test: Test = None
+    test: Test or None = None
     for name, instance in _cached_tests:
         if name == test_name:
             test = instance
@@ -146,7 +147,7 @@ def check_eligibility_by_name_battery(test_name: str,
     :return: a boolean flag of True if eligible, false otherwise
     """
     # Generate the test or fetch it from cache if possible
-    test: Test = None
+    test: Test or None = None
     for name, instance in _cached_tests:
         if name == test_name:
             test = instance

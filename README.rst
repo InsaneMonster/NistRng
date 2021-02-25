@@ -47,9 +47,21 @@ and to the provided source code in the `repository <https://github.com/InsaneMon
 Currently the slow speed of both the Serial and Approximate Entropy tests is an open issue. Any solution or improvement is
 welcome.
 
+**Can I help?**
+
+Yes, of course! This project is very side to me, so any help in reporting issues, fixing bugs, testing functionalities and overall improving it is welcome!
+
 **Changelog**
 
-- improved safe-guard against eventual NaN values that may arise inside the score calculations
-- added unpack function to return to the original numeric integer value from a 8-bit binary sequence
-- some minor fixes and adjustments
+**v. 1.2.1:**
 
+- Improved safe-guard against eventual NaN values that may arise inside the score calculations
+- Added unpack function to return to the original numeric integer value from a 8-bit binary sequence
+- Some minor fixes and adjustments
+
+**v. 1.2.2:**
+
+- Fixed SP800_22R1A_BATTERY dictionary which was missing the cumulative sums test
+- Fixed missing parenthesis on test_approximate_entropy.py
+- Fixed bugs on some tests for very long sequences
+- Some minor fixes and adjustments
