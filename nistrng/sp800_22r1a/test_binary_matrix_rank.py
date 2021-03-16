@@ -13,10 +13,132 @@
 
 import numpy
 import math
+import copy
 
 # Import required src
 
 from nistrng import Test, Result
+
+
+class BinaryMatrix:
+    """
+    Binary Matrix containing all the algorithm specified in the NIST suite for computing the **binary rank** of a matrix.
+    """
+
+    def __init__(self, block: numpy.ndarray, rows_number: int, columns_number: int):
+        self._rows = rows_number
+        self._columns = columns_number
+        self._matrix = block
+        self._base_rank = min(self._rows, self._columns)
+
+    def _perform_row_operations(self, i: int, forward_elimination: bool):
+        """
+        Performs elementary row operations. This involves xor'ing up to two rows together depending on whether or not
+        certain elements in the matrix contain 1 if the "current" element does not.
+        :param i: the index of the "current" element of the matrix
+        :param forward_elimination: boolean flag if we are performing forward elimination or not
+        """
+        if forward_elimination:
+            # Process all the following rows
+            j: int = i + 1
+            while j < self._rows:
+                if self._matrix[j][i] == 1:
+                    self._matrix[j, :] = (self._matrix[j, :] + self._matrix[i, :]) % 2
+                j += 1
+        else:
+            # Process all the previous rows
+            j: int = i - 1
+            while j >= 0:
+                if self._matrix[j][i] == 1:
+                    self._matrix[j, :] = (self._matrix[j, :] + self._matrix[i, :]) % 2
+                j -= 1
+
+    def _find_unit_element_swap(self, i: int, forward_elimination: bool) -> int:
+        """
+        Searches through the rows below/above the given index to see which rows contain 1, if they do then they are
+        swapped. This is supposed to be called on the forward and backward elimination.
+        :param i: the index of the "current" element of the matrix
+        :param forward_elimination: boolean flag if we are performing forward elimination or not
+        :return: an integer value 0 or 1 depending on row_swap_operation result
+        """
+        row_swap_operation: int = 0
+        if forward_elimination:
+            # Process the following rows
+            index: int = i + 1
+            while index < self._rows and self._matrix[index][i] == 0:
+                index += 1
+            if index < self._rows:
+                row_swap_operation = self._swap_rows(i, index)
+        else:
+            # Process the previous rows
+            index: int = i - 1
+            while index >= 0 and self._matrix[index][i] == 0:
+                index -= 1
+            if index >= 0:
+                row_swap_operation = self._swap_rows(i, index)
+        return row_swap_operation
+
+    def _swap_rows(self, source_row_index: int, target_row_index: int) -> int:
+        """
+        This method just swaps two rows in a matrix. We use copy package to ensure no memory leakage.
+        :param source_row_index: the row we want to swap (source)
+        :param target_row_index: the row we want to swap it with (target)
+        :return: an integer value of 1
+        """
+        # Swap rows
+        temp_matrix = copy.copy(self._matrix[source_row_index, :])
+        self._matrix[source_row_index, :] = self._matrix[target_row_index, :]
+        self._matrix[target_row_index, :] = temp_matrix
+        # Always return 1
+        return 1
+
+    def _compute_rank(self) -> int:
+        """
+        Computes the rank of the transformed matrix. It must be called after the matrix is correctly prepared.
+        :return: the rank of the transformed matrix
+        """
+        # Rank start from the minimum value of rows and columns
+        rank: int = self._base_rank
+        i: int = 0
+        # Process all the rows
+        while i < self._rows:
+            all_zeros: bool = True
+            # Process all the columns (check if there is at least a non-zero element)
+            for j in range(self._columns):
+                if self._matrix[i][j] == 1:
+                    all_zeros = False
+            # If a row is of all zeros, it's not counted towards the rank
+            if all_zeros:
+                rank -= 1
+            i += 1
+        return rank
+
+    def compute_rank(self) -> int:
+        """
+        Computes the **binary rank** of the matrix.
+        :return: an integer defining binary rank of the matrix.
+        """
+        # Perform row operations with forward elimination
+        i: int = 0
+        while i < self._base_rank - 1:
+            if self._matrix[i][i] == 1:
+                self._perform_row_operations(i, True)
+            else:
+                found = self._find_unit_element_swap(i, True)
+                if found == 1:
+                    self._perform_row_operations(i, True)
+            i += 1
+        # Perform row operations without forward elimination
+        i = self._base_rank - 1
+        while i > 0:
+            if self._matrix[i][i] == 1:
+                self._perform_row_operations(i, False)
+            else:
+                if self._find_unit_element_swap(i, False) == 1:
+                    self._perform_row_operations(i, False)
+            i -= 1
+        # Compute the rank of the transformed matrix
+        return self._compute_rank()
 
 
 class BinaryMatrixRankTest(Test):
@@ -67,7 +189,8 @@ class BinaryMatrixRankTest(Test):
             # Get the bits in the block and reshape them in a 2D array (the matrix)
             block: numpy.ndarray = bits[i * (self._rows_number * self._cols_number):(i + 1) * (self._rows_number * self._cols_number)].reshape((self._rows_number, self._cols_number))
             # Compute rank of the block matrix
-            rank: int = numpy.linalg.matrix_rank(block)
+            matrix: BinaryMatrix = BinaryMatrix(block, self._rows_number, self._cols_number)
+            rank: int = matrix.compute_rank()
             # Count the result
             if rank == self._rows_number:
                 full_rank_matrices += 1
@@ -106,5 +229,5 @@ class BinaryMatrixRankTest(Test):
         """
         # Compute the product used to compute the probabilities of each kind of matrix rank frequency
         indexes: numpy.ndarray = numpy.arange(number_of_rows)
-        product: float = numpy.prod(((1.0 - (2.0 ** (indexes[:] - number_of_cols))) * (1.0 - (2.0 ** (indexes[:] - number_of_rows)))) / (1 - (2.0 ** (indexes[:] - number_of_rows))))
+        product: float = float(numpy.prod(((1.0 - (2.0 ** (indexes[:] - number_of_cols))) * (1.0 - (2.0 ** (indexes[:] - number_of_rows)))) / (1 - (2.0 ** (indexes[:] - number_of_rows)))))
         return product
