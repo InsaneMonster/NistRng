@@ -65,3 +65,8 @@ Yes, of course! This project is very side to me, so any help in reporting issues
 - Fixed missing parenthesis on test_approximate_entropy.py
 - Fixed bugs on some tests for very long sequences
 - Some minor fixes and adjustments
+
+**v. 1.2.3:**
+
+- Fixed binary matrix rank test (credits to @scrambler-crypto)
+- Fixed a frequencies computation bug (w.r.t. tickets) on the linear complexity test
