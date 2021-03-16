@@ -67,7 +67,7 @@ class LinearComplexityTest(Test):
         # Compute frequencies depending on tickets
         frequencies: numpy.ndarray = numpy.zeros(self._freedom_degrees + 1, dtype=int)
         for ticket in tickets:
-            frequencies[min(self._freedom_degrees, int(ticket + 2.5))] += 1
+            frequencies[min(self._freedom_degrees, int(max(-2.5, ticket) + 2.5))] += 1
         # Compute Chi-square using pre-defined probabilities
         chi_square: float = float(numpy.sum(((frequencies[:] - (blocks_number * self._probabilities[:])) ** 2.0) / (blocks_number * self._probabilities[:])))
         # Compute the score (P-value)
